@@ -160,6 +160,7 @@ function loadsession(path="session/")
 	BSON.@load latest D G
 	history = CSV.read(joinpath(path, "train-history.csv"), DataFrame)
 	TrainingSession(;
+		path,
 		hyperparameters=hp,
 		discriminator=D,
 		generator=G,
