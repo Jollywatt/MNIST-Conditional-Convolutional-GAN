@@ -58,7 +58,8 @@ function trainstep(session, batch)
 
 	real, labels = batch
 
-	fake = G(vcat(labels, randn(Float32, hp.latentdim, hp.batchsize)))
+	batchsize = size(batch)[end]
+	fake = G(vcat(labels, randn(Float32, hp.latentdim, batchsize)))
 	fakelabelled, reallabelled = withlabel(fake, labels), withlabel(real, labels)
 
 	# update discriminator
