@@ -158,7 +158,7 @@ function loadsession(path="session/")
 	hp = include(joinpath(path, "hyperparameters.jl"))
 	latest = last(readdir(joinpath(path, "models/"); sort=true, join=true))
 	BSON.@load latest D G
-	history = CSV.read("train-history.csv", DataFrame)
+	history = CSV.read(joinpath(path, "train-history.csv"), DataFrame)
 	TrainingSession(;
 		hyperparameters=hp,
 		discriminator=D,
