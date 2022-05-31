@@ -58,7 +58,7 @@ function trainstep(session, batch)
 
 	real, labels = batch
 
-	batchsize = size(batch)[end]
+	batchsize = size(real)[end]
 	fake = G(vcat(labels, randn(Float32, hp.latentdim, batchsize)))
 	fakelabelled, reallabelled = withlabel(fake, labels), withlabel(real, labels)
 
@@ -71,7 +71,7 @@ function trainstep(session, batch)
 
 	# update generator
 	Gθ = Flux.params(G)
-	z = vcat(labels, randn(Float32, hp.latentdim, hp.batchsize))
+	z = vcat(labels, randn(Float32, hp.latentdim, batchsize))
 	Gloss, G∇ = Flux.withgradient(Gθ) do
 		-sum(D(withlabel(G(z), Float32.(labels))))
 		# need to cast to Float32... bug? (https://discourse.julialang.org/t/help-me-pin-this-bug-in-flux/81901)
