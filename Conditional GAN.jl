@@ -91,7 +91,7 @@ function train(session; printout_period=5)
         write(file, "Delete this file to stop training.")
     end
 
-	for batch in session.batches
+	for batch in Iterators.cycle(session.batches)
 		trainstep(session, batch)
 
 		isfile(trainfile) || break
